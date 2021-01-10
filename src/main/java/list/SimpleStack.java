@@ -12,6 +12,10 @@ package list;
 public class SimpleStack<T> {
     private final ForwardLinked<T> linked = new ForwardLinked<T>();
 
+    public int getSize() {
+        return linked.getSize();
+    }
+
     public T pop() {
         return linked.deleteLast();
     }
