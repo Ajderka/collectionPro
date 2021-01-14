@@ -19,6 +19,7 @@ public class SimpleArray<T> implements Iterable<T> {
     public Iterator<T> iterator() {
         return new Iterator<>() {
             int count = 0;
+
             @Override
             public boolean hasNext() {
                 return point <= array.length;
