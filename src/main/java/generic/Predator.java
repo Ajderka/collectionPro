@@ -1,4 +1,4 @@
 package generic;
 
-public class Predator extends Animal{
+public class Predator extends Animal {
 }

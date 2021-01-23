@@ -5,7 +5,8 @@ package list;
  * Метод push(T value) - помещает значение в коллекцию.
  * <p>
  * Внутри класса SimpleStack есть поле ForwardLinked. Это связанный список из предыдущего задания.
- * Мы можем добавить значение в ForwardLinked. Вам нужно в этот класс добавить метод deleteLast(). Чтобы реализовать метод SimpleStack.poll
+ * Мы можем добавить значение в ForwardLinked. Вам нужно в этот класс добавить метод deleteLast().
+ * Чтобы реализовать метод SimpleStack.poll
  *
  * @param <T>
  */

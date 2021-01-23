@@ -4,8 +4,8 @@ import java.util.Iterator;
 import java.util.Objects;
 
 public class SimpleArray<T> implements Iterable<T> {
-    Object[] array;
-    int point = 0;
+    private Object[] array;
+    private int point = 0;
 
     public SimpleArray() {
         array = new Object[10];
@@ -18,7 +18,7 @@ public class SimpleArray<T> implements Iterable<T> {
     @Override
     public Iterator<T> iterator() {
         return new Iterator<>() {
-            int count = 0;
+            private int count = 0;
 
             @Override
             public boolean hasNext() {

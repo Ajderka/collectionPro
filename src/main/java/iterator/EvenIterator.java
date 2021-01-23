@@ -4,8 +4,8 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 public class EvenIterator implements Iterator<Integer> {
-    int[] mass;
-    int index = 0;
+    private int[] mass;
+    private int index = 0;
 
     public EvenIterator(int[] mass) {
         this.mass = mass;
