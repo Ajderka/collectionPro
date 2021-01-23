@@ -1,4 +1,4 @@
-package generic.set;
+package set;
 
 import generic.SimpleArray;
 
