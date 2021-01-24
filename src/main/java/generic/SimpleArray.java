@@ -3,8 +3,8 @@ package generic;
 import java.util.Iterator;
 import java.util.Objects;
 
-public class SimpleArray<T> implements Iterable<T> {
-    private Object[] array;
+public class SimpleArray<T> implements Iterable<Object> {
+    private final Object[] array;
     private int point = 0;
 
     public SimpleArray() {
@@ -15,8 +15,12 @@ public class SimpleArray<T> implements Iterable<T> {
         this.array = new Object[length];
     }
 
+    public int getSize() {
+        return point;
+    }
+
     @Override
-    public Iterator<T> iterator() {
+    public Iterator<Object> iterator() {
         return new Iterator<>() {
             private int count = 0;
 
@@ -26,11 +30,11 @@ public class SimpleArray<T> implements Iterable<T> {
             }
 
             @Override
-            public T next() {
+            public Object next() {
                 if (!hasNext()) {
                     throw new ArrayIndexOutOfBoundsException("нет свободных ячеек");
                 }
-                return (T) array[count++];
+                return array[count++];
             }
         };
     }

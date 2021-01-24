@@ -45,7 +45,7 @@ public class SimpleArrayTest {
         for (int i = 0; i < 10; i++) {
             simpleArray.add(i + 1);
         }
-        Iterator<Integer> iterator = simpleArray.iterator();
+        Iterator<Object> iterator = simpleArray.iterator();
         assertThat(iterator.next(), is(1));
         assertThat(iterator.next(), is(2));
         assertThat(iterator.next(), is(3));
