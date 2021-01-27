@@ -19,8 +19,11 @@ public class SimpleHashMap<K, V> implements Iterable<SimpleHashMap.Node<K, V>> {
     }
 
     private int getIndex(Object key) {
-        int h;
-        return key == null ? 0 : (h = key.hashCode()) ^ (h >>> 16) & nodeArray.length;
+        if (key == null) {
+            return 0;
+        }
+        int h = key.hashCode();
+        return h ^ (h >>> 16) & nodeArray.length;
     }
 
     public V get(K key) throws NullPointerException {
