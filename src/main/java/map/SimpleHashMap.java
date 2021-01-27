@@ -2,85 +2,68 @@ package map;
 
 import java.util.Iterator;
 
-/**
- * Ассоциативный массив на базе хэш-таблицы должен быть унифицирован через генерики и иметь методы:
- * boolean insert(K key, V value);
- * V get(K key);
- * boolean delete(K key);
- * <p>
- * Реализовывать итератор.
- * Внутренняя реализация должна использовать массив. Нужно обеспечить фиксированное время вставки и получение.
- * Предусмотрите возможность роста хэш-таблицы при нехватке места для нового элемента.
- * Методы разрешения коллизий реализовывать не надо. Например: если при добавлении ключ уже есть, то возвращать false.
- **/
-
-public class MyHashMap<K, V> implements Iterable<MyHashMap.Node<K, V>> {
+public class SimpleHashMap<K, V> implements Iterable<SimpleHashMap.Node<K, V>> {
     static final int DEFAULT_INITIAL_CAPACITY = 1 << 4;
     static final float DEFAULT_LOAD_FACTOR = 0.75f;
 
     private Node<K, V>[] nodeArray;
-    private int size;
+    private int loadMassive;
     private int modification = 0;
 
-    public MyHashMap() {
+    public SimpleHashMap() {
         this.nodeArray = (Node<K, V>[]) new Node[DEFAULT_INITIAL_CAPACITY];
     }
 
-    private int indexDefinition(Object key) {
+    public SimpleHashMap(int length) {
+        this.nodeArray = (Node<K, V>[]) new Node[length];
+    }
+
+    private int getIndex(Object key) {
         int h;
         return key == null ? 0 : (h = key.hashCode()) ^ (h >>> 16) & nodeArray.length;
     }
 
     public V get(K key) throws NullPointerException {
-        if (nodeArray[indexDefinition(key)].value == null) {
+        if (nodeArray[getIndex(key)].value == null) {
             throw new NullPointerException("This item is missing");
         }
         modification++;
-        return nodeArray[indexDefinition(key)].value;
+        return nodeArray[getIndex(key)].value;
     }
 
     public boolean insert(K key, V value) {
-        if (nodeArray[indexDefinition(key)] != null) {
+        if (nodeArray[getIndex(key)] != null) {
             return false;
+        } else if (loadMassive / DEFAULT_LOAD_FACTOR > nodeArray.length) {
+            this.newArraySize();
         }
         Node<K, V> node = new Node<>(key, value);
-        nodeArray[indexDefinition(key)] = node;
-        size++;
+        nodeArray[getIndex(key)] = node;
+        loadMassive++;
         modification++;
-        if (size / DEFAULT_LOAD_FACTOR > nodeArray.length) {
-            newArraySize();
-        }
         return true;
     }
 
     public boolean delete(K key) {
-        if (nodeArray[indexDefinition(key)] == null) {
+        if (nodeArray[getIndex(key)] == null) {
             return false;
         }
-        nodeArray[indexDefinition(key)] = null;
+        nodeArray[getIndex(key)] = null;
+        loadMassive--;
         modification++;
         return true;
     }
 
     private void newArraySize() {
-        Node<K, V>[] newArray = (Node<K, V>[]) new Node[nodeArray.length << 1];
-        Iterator<Node<K, V>> it = iterator();
-
-        Node<K, V> next;
+        SimpleHashMap<K, V> simpleHashMap = new SimpleHashMap<>(loadMassive << 1);
+        Iterator<Node<K, V>> it = this.iterator();
         while (it.hasNext()) {
-            next = it.next();
-            if (next.key == key) {
-                return next.value;
-            }
+            Node<K, V> next = it.next();
+            simpleHashMap.insert(next.key, next.value);
         }
-
-
-        for (Node<K, V> n : nodeArray) {
-            if (n != null) {
-                newArray[indexDefinition(n.key)] = n;
-            }
-        }
-        nodeArray = newArray;
+        nodeArray = simpleHashMap.nodeArray;
+        loadMassive = simpleHashMap.loadMassive;
+        modification = simpleHashMap.modification;
     }
 
     @Override
