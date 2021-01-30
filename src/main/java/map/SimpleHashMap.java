@@ -1,6 +1,7 @@
 package map;
 
 import java.util.Iterator;
+import java.util.Objects;
 
 public class SimpleHashMap<K, V> implements Iterable<SimpleHashMap.Node<K, V>> {
     static final int DEFAULT_INITIAL_CAPACITY = 1 << 4;
@@ -22,8 +23,7 @@ public class SimpleHashMap<K, V> implements Iterable<SimpleHashMap.Node<K, V>> {
         if (key == null) {
             return 0;
         }
-        int h = key.hashCode();
-        return h ^ (h >>> 16) & nodeArray.length;
+        return  key.hashCode() & (nodeArray.length - 1);
     }
 
     public V get(K key) throws NullPointerException {
@@ -35,13 +35,14 @@ public class SimpleHashMap<K, V> implements Iterable<SimpleHashMap.Node<K, V>> {
     }
 
     public boolean insert(K key, V value) {
-        if (nodeArray[getIndex(key)] != null) {
+        int index = getIndex(key);
+        if (nodeArray[index] != null) {
             return false;
         } else if (loadMassive / DEFAULT_LOAD_FACTOR > nodeArray.length) {
             this.newArraySize();
         }
         Node<K, V> node = new Node<>(key, value);
-        nodeArray[getIndex(key)] = node;
+        nodeArray[index] = node;
         loadMassive++;
         modification++;
         return true;
