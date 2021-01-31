@@ -12,7 +12,7 @@ class Tree<E> implements SimpleTree<E> {
     @Override
     public boolean isBinary(E value) {
         Optional<Node<E>> optionalENode = findBy(value);
-        return optionalENode.filter(eNode -> eNode.children.size() <= 2).isPresent();
+        return optionalENode.filter(eNode -> eNode.getChildren().size() <= 2).isPresent();
     }
 
     @Override
@@ -20,7 +20,7 @@ class Tree<E> implements SimpleTree<E> {
         Optional<Node<E>> optionalENode = findBy(parent);
         List<Node<E>> nodeList;
         if (optionalENode.isPresent()) {
-            nodeList = optionalENode.get().children;
+            nodeList = optionalENode.get().getChildren();
             for (Node<E> n : nodeList) {
                 if (n.equals(child)) {
                     return false;
@@ -40,11 +40,11 @@ class Tree<E> implements SimpleTree<E> {
         data.offer(this.root);
         while (!data.isEmpty()) {
             Node<E> el = data.poll();
-            if (el.value.equals(value)) {
+            if (el.getValue().equals(value)) {
                 rsl = Optional.of(el);
                 break;
             }
-            data.addAll(el.children);
+            data.addAll(el.getChildren());
         }
         return rsl;
     }

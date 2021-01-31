@@ -7,7 +7,6 @@ import static org.junit.Assert.assertThat;
 
 public class SimpleHashMapTest {
 
-
     @Test
     public void whenAddFiveElements() {
         SimpleHashMap<Integer, Integer> simpleHashMap = new SimpleHashMap<>();

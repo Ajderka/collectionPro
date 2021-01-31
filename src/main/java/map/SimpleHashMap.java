@@ -23,7 +23,7 @@ public class SimpleHashMap<K, V> implements Iterable<SimpleHashMap.Node<K, V>> {
         if (key == null) {
             return 0;
         }
-        return  key.hashCode() & (nodeArray.length - 1);
+        return key.hashCode() & (nodeArray.length - 1);
     }
 
     public V get(K key) throws NullPointerException {
@@ -73,9 +73,9 @@ public class SimpleHashMap<K, V> implements Iterable<SimpleHashMap.Node<K, V>> {
     @Override
     public Iterator<Node<K, V>> iterator() {
         return new Iterator<>() {
-            final Node<K, V>[] node = nodeArray;
+            private final Node<K, V>[] node = nodeArray;
             private int point = 0;
-            final int mod = modification;
+            private final int mod = modification;
 
             @Override
             public boolean hasNext() {
@@ -99,8 +99,8 @@ public class SimpleHashMap<K, V> implements Iterable<SimpleHashMap.Node<K, V>> {
     }
 
     static class Node<K, V> {
-        final K key;
-        V value;
+        private final K key;
+        private V value;
 
         public Node(K key, V value) {
             this.key = key;
