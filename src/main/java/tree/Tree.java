@@ -2,20 +2,17 @@ package tree;
 
 import java.util.*;
 
-/**
- * Метод add - Должен находить узел по значению parent и добавлять в него дочерний узел
- * со значением child.
- * В этом методе нужно проверить, что значения child еще нет в дереве а parent есть.
- * Если child есть, то метод должен вернуть false.
- *
- * @param <E>
- */
-
 class Tree<E> implements SimpleTree<E> {
     private final Node<E> root;
 
     Tree(final E root) {
         this.root = new Node<>(root);
+    }
+
+    @Override
+    public boolean isBinary(E value) {
+        Optional<Node<E>> optionalENode = findBy(value);
+        return optionalENode.filter(eNode -> eNode.children.size() <= 2).isPresent();
     }
 
     @Override
